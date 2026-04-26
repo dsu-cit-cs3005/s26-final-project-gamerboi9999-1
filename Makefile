@@ -1,15 +1,26 @@
-# Compiler
 CXX = g++
-CXXFLAGS = -std=c++20 -Wall -Wextra -pedantic
+CXXFLAGS = -std=c++20 -Wall -g -fPIC
+LDFLAGS = -ldl
 
-# Targets
-all: test_robot
+TARGET = RobotWarz
+TESTER = test_robot
 
-RobotBase.o: RobotBase.cpp RobotBase.h
-	$(CXX) $(CXXFLAGS) -c RobotBase.cpp
+OBJS = main.o Arena.o RobotBase.o
 
-test_robot: test_robot.cpp RobotBase.o
-	$(CXX) $(CXXFLAGS) test_robot.cpp RobotBase.o -ldl -o test_robot
+all: $(TARGET) $(TESTER)
+
+$(TARGET): $(OBJS)
+	$(CXX) -o $@ $^ $(LDFLAGS)
+
+$(TESTER): test_robot.o RobotBase.o
+	$(CXX) -o $@ $^ $(LDFLAGS)
+
+main.o: main.cpp Arena.h RobotBase.h RadarObj.h
+Arena.o: Arena.cpp Arena.h RobotBase.h RadarObj.h
+RobotBase.o: RobotBase.cpp RobotBase.h RadarObj.h
+test_robot.o: test_robot.cpp RobotBase.h RadarObj.h
 
 clean:
-	rm -f *.o test_robot *.so
+	rm -f $(OBJS) $(TARGET) $(TESTER) test_robot.o robots/*.so
+
+.PHONY: all clean
