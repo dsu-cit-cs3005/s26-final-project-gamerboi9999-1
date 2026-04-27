@@ -29,7 +29,6 @@ public:
     }
 
     void get_radar_direction(int& radar_direction) override {
-        // Always scan the 8 immediate cells (direction 0)
         radar_direction = 0;
     }
 
@@ -48,7 +47,6 @@ public:
                     hasTarget = true;
                 }
             } else if (obj.m_type == 'X' && distance(currentRow, currentCol, obj.m_row, obj.m_col) == 1) {
-                std::cout << "ANSI: Mmm, fresh blood~ (healing flavour)" << std::endl;
             }
         }
         if (hasTarget && closestDist > 5)
@@ -76,7 +74,6 @@ public:
         get_current_location(currentRow, currentCol);
 
         if (hasTarget) {
-            // Chase enemy
             int dr = (targetRow > currentRow) ? 1 : (targetRow < currentRow) ? -1 : 0;
             int dc = (targetCol > currentCol) ? 1 : (targetCol < currentCol) ? -1 : 0;
             if      (dr == -1 && dc == 0) direction = 1;
@@ -101,13 +98,10 @@ public:
             return;
         }
 
-        // No target: random movement (pick a random direction 1-8)
         direction = (std::rand() % 8) + 1;
-        // Validate that the chosen direction leads inside the arena
         int nr = currentRow + directions[direction].first;
         int nc = currentCol + directions[direction].second;
         if (!inside(nr, nc)) {
-            // If invalid, try all directions in order until one is valid
             for (int d = 1; d <= 8; ++d) {
                 nr = currentRow + directions[d].first;
                 nc = currentCol + directions[d].second;
