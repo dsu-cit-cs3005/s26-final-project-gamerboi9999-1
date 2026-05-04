@@ -22,7 +22,7 @@ private:
     }
 
 public:
-    Robot_ANSI() : RobotBase(4, 3, railgun) {
+    Robot_ANSI() : RobotBase(3, 4, hammer) {
         m_name = "ANSI";
         std::srand(static_cast<unsigned>(std::time(nullptr)));
     }
