@@ -25,7 +25,6 @@ public:
     Robot_ANSI() : RobotBase(4, 3, railgun) {
         m_name = "ANSI";
         std::srand(static_cast<unsigned>(std::time(nullptr)));
-        std::cout << "ANSI: Hehe, let's rock! Papa would be proud~" << std::endl;
     }
 
     void get_radar_direction(int& radar_direction) override {
@@ -50,7 +49,6 @@ public:
             }
         }
         if (hasTarget && closestDist > 5)
-            std::cout << "ANSI: Deploying wings! Time to chase!" << std::endl;
     }
 
     bool get_shot_location(int& shotRow, int& shotCol) override {
@@ -59,7 +57,6 @@ public:
         get_current_location(currentRow, currentCol);
         int dist = distance(currentRow, currentCol, targetRow, targetCol);
         if (flipCooldown == 0 && dist <= 2 && (std::rand() % 3 == 0)) {
-            std::cout << "ANSI: ANSI FLIP! Eat lead!" << std::endl;
             flipCooldown = 3;
         } else if (flipCooldown > 0) {
             flipCooldown--;
