@@ -48,7 +48,7 @@ public:
             } else if (obj.m_type == 'X' && distance(currentRow, currentCol, obj.m_row, obj.m_col) == 1) {
             }
         }
-        if (hasTarget && closestDist > 5)
+        if (hasTarget && closestDist > 5);
     }
 
     bool get_shot_location(int& shotRow, int& shotCol) override {
